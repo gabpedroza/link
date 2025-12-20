@@ -23,7 +23,7 @@
                 if (target) {
                     window.location.replace(target); // .replace is better for back-button behavior
                 } else {
-                    document.body.innerHTML = `Link "${cleanPath}" not found. <a href="/s/links.json">View all links</a>`;
+                    document.body.innerHTML = `Link "${cleanPath}" not found. <a href="/link/links.json">View all links</a>`;
                 }
             })
             .catch(err => {
