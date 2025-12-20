@@ -8,7 +8,7 @@
             .then(data => {
                 // 1. Get the path and convert it to LOWERCASE
                 // This turns "/s/Twitter" into "twitter"
-                const rawPath = window.location.pathname.replace(/\/s\//g, "");
+                const rawPath = window.location.pathname.replace(/\/link\//g, "");
                 const cleanPath = rawPath.replace(/\/$/, "").toLowerCase();
 
                 // 2. Create a version of your database where all keys are lowercase
