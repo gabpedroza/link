@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <script>
+        // Load your links
+        fetch('/links.json')
+            .then(response => response.json())
+            .then(data => {
+                // Get the word after the slash (e.g., "blog")
+                const path = window.location.pathname.replace(/\//g, "");
+                const target = data[path];
+
+                if (target) {
+                    window.location.href = target;
+                } else {
+                    document.body.innerHTML = "Link not found. <a href='/'>Go Home</a>";
+                }
+            });
+    </script>
+</head>
+<body>
+    <p>Loading link...</p>
+</body>
+</html>
