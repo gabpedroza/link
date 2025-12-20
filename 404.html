@@ -1,37 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
     <title>Redirecting...</title>
+    <link rel="preconnect" href="https://docs.google.com" crossorigin>
+    <link rel="dns-prefetch" href="https://docs.google.com"
+    
     <script>
-        fetch('/link/links.json') // Make sure this path matches your repo name
-            .then(response => response.json())
-            .then(data => {
-                // 1. Get the path and convert it to LOWERCASE
-                // This turns "/s/Twitter" into "twitter"
-                const rawPath = window.location.pathname.replace(/\/link\//g, "");
-                const cleanPath = rawPath.replace(/\/$/, "").toLowerCase();
+        /** * YOUR LINK DATABASE 
+         * Add your links here. Keep the keys lowercase.
+         */
+        const LINKS = {
+            "sigmafpga":"https://docs.google.com/presentation/d/1bTYfGVOpIBun6MVJAoyte3SwnElrsvyxNN7GVGwQmEw/edit?usp=sharing"
+        };
 
-                // 2. Create a version of your database where all keys are lowercase
-                const links = {};
-                for (let key in data) {
-                    links[key.toLowerCase()] = data[key];
-                }
+        (function() {
+            // 1. Get the slug (the part after /link/)
+            // This handles trailing slashes and converts to lowercase instantly
+            const path = window.location.pathname.replace(/\/link\//g, "").replace(/\/$/, "").toLowerCase();
 
-                // 3. Look up the link
-                const target = links[cleanPath];
+            // 2. Check if the link exists
+            const target = LINKS[path];
 
-                if (target) {
-                    window.location.replace(target); // .replace is better for back-button behavior
-                } else {
-                    document.body.innerHTML = `Link "${cleanPath}" not found. <a href="/link/links.json">View all links</a>`;
-                }
-            })
-            .catch(err => {
-                document.body.innerHTML = "Error loading links.";
-            });
+            if (target) {
+                // 3. Redirect immediately using .replace (fastest browser method)
+                window.location.replace(target);
+            } else {
+                // Fallback if link is missing
+                window.addEventListener('DOMContentLoaded', () => {
+                    document.body.innerHTML = `Link "<strong>${path}</strong>" not found. <a href="/">Go back</a>`;
+                });
+            }
+        })();
     </script>
+    
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: #333; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
 </head>
 <body>
-    <p>Redirecting you...</p>
+    <div class="spinner"></div>
 </body>
 </html>
